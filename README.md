@@ -26,10 +26,9 @@ Build instructions
 By default, the `patched-5` version will be checked out.
 
 ```
-git clone git://github.com/commontk/PythonQt.git
-mkdir PythonQt-build
-cd PythonQt-build
-cmake -DQT_QMAKE_EXECUTABLE:FILEPATH=/path/to/qmake ../PythonQt
+git clone git://github.com/jmirabel/PythonQt.git
+mkdir PythonQt/_build && cd PythonQt/_build
+cmake -DPythonQt_Wrap_QtAll=ON -DPythonQt_Extensions=ON ..
 make
 ```
 
@@ -39,6 +38,7 @@ Additional configure options are:
 * `PythonQt_DEBUG`: Enable/Disable PythonQt debug output
 * `PythonQt_Wrap_QtAll`: Make all Qt components available in python
 * `PythonQt_Wrap_Qt<componentname>`: Build PythonQt wrapper associated with `<componentname>`. Possible `<componentname>` are `gui`, `network`, `opengl`, `sql`, `uitools`, `webkit`, `xml`, `xmlpatterns`.
+* `PythonQt_Extensions`: Build the extension (requires `PythonQt_Wrap_QtAll` to be `ON`)
 
 Available branches
 ------------------
