@@ -12,7 +12,7 @@ if(PythonQt_Extensions)
 
   include_directories(generated_cpp${generated_cpp_suffix})
 
-  add_library(PythonQt_QtAll ${qtall_sources})
+  add_library(PythonQt_QtAll SHARED ${qtall_sources})
   target_link_libraries(PythonQt_QtAll PythonQt)
 
   install(TARGETS PythonQt_QtAll
