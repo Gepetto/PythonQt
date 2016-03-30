@@ -163,6 +163,7 @@ set(headers
     src/PythonQtUtils.h
     src/PythonQtVariants.h
     src/PythonQtPythonInclude.h
+    src/gui/PythonQtScriptingConsole.h
     generated_cpp${generated_cpp_suffix}/PythonQt_QtBindings.h
 )
 
@@ -258,6 +259,9 @@ install(TARGETS PythonQt
         LIBRARY DESTINATION ${PythonQt_INSTALL_LIBRARY_DIR}
         ARCHIVE DESTINATION ${PythonQt_INSTALL_ARCHIVE_DIR})
 install(FILES ${headers} DESTINATION ${PythonQt_INSTALL_INCLUDE_DIR})
+install(FILES ${headers_gui} DESTINATION ${PythonQt_INSTALL_INCLUDE_DIR}/gui)
+
+ADD_SUBDIRECTORY(extensions)
 
 #-----------------------------------------------------------------------------
 # Testing
