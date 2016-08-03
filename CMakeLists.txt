@@ -22,6 +22,11 @@ add_definitions(
   )
 
 #-----------------------------------------------------------------------------
+# OpenGL libraries
+
+find_package(OpenGL REQUIRED)
+
+#-----------------------------------------------------------------------------
 # Build options
 
 if(NOT DEFINED PythonQt_INSTALL_RUNTIME_DIR)
@@ -236,6 +241,7 @@ add_library(PythonQt SHARED
             ${gen_ui_sources}
             ${gen_qrc_sources}
   )
+target_link_libraries(PythonQt ${OPENGL_LIBRARY})
 set_target_properties(PythonQt PROPERTIES DEFINE_SYMBOL PYTHONQT_EXPORTS)
 
 #
