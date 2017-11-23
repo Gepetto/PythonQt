@@ -377,3 +377,4 @@ if(BUILD_TESTING)
     )
 endif()
 
+ADD_SUBDIRECTORY(matplotlib)
