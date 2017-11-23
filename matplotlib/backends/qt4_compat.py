@@ -5,7 +5,7 @@ import os
 from matplotlib import rcParams, verbose
 
 # Available APIs.
-QT_API_PythonQt = 'PythonQt'
+QT_API_PYTHONQT = 'PythonQt'
 QT_API_PYQT = 'PyQt4'       # API is not set here; Python 2.x default is V 1
 QT_API_PYQTv2 = 'PyQt4v2'   # forced to Version 2 API
 QT_API_PYSIDE = 'PySide'    # only supports Version 2 API
@@ -93,7 +93,7 @@ elif QT_API == QT_API_PYSIDE: # can only be pyside
             "Matplotlib backend_qt4 and backend_qt4agg require PySide >=1.0.3")
 
     _get_save = QtGui.QFileDialog.getSaveFileName
-else:
+elif QT_API == QT_API_PYTHONQT:
     from PythonQt import QtCore, QtGui
     __version__ = "2.0"
     __version_info__ = "-"

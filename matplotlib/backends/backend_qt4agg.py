@@ -8,7 +8,7 @@ import os, sys
 import matplotlib
 from matplotlib.figure import Figure
 
-from backend_agg import FigureCanvasAgg
+from matplotlib.backends.backend_agg import FigureCanvasAgg
 from backend_qt4 import QtCore, QtGui, FigureManagerQT, FigureCanvasQT,\
      show, draw_if_interactive, backend_version, \
      NavigationToolbar2QT
