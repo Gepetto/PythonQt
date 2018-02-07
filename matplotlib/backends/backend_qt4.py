@@ -49,7 +49,7 @@ def _create_qApp():
     Only one qApp can exist at a time, so check before creating one.
     """
     return
-    # Disabled for MeVisLab, since QApplication is already there
+    # Disabled since QApplication is already there
     if QtGui.QApplication.startingUp():
         if DEBUG: print "Starting up QApplication"
         global qApp
