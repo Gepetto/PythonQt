@@ -535,7 +535,7 @@ void* PythonQtConv::ConvertPythonToQt(const PythonQtMethodInfo::ParameterInfo& i
      case QMetaType::UInt:
        {
          quint64 val = PyObjGetLongLong(obj, strict, ok);
-         if (ok && (val >= 0 && val <= UINT_MAX)) {
+         if (ok && val <= UINT_MAX) {
            PythonQtValueStorage_ADD_VALUE_IF_NEEDED(alreadyAllocatedCPPObject,global_valueStorage, unsigned int, val, ptr);
          }
        }
