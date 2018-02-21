@@ -56,7 +56,7 @@ endif()
 # Python libraries
 
 find_package(PythonLibs REQUIRED)
-include_directories("${PYTHON_INCLUDE_DIR}")
+include_directories(system "${PYTHON_INCLUDE_DIR}")
 add_definitions(
   -DPYTHONQT_USE_RELEASE_PYTHON_FALLBACK
   -DPYTHONQT_SUPPORT_NAME_PROPERTY
@@ -195,6 +195,7 @@ else()
     set(QT_USE_QTTEST ${BUILD_TESTING})
 
     include(${QT_USE_FILE})
+    include_directories(system ${QT_INCLUDE_DIRS})
   else()
     message(FATAL_ERROR "error: Qt4 was not found on your system. You probably need to set the QT_QMAKE_EXECUTABLE variable")
   endif()
