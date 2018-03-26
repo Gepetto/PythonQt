@@ -1,14 +1,18 @@
 option(PythonQt_Extensions "Build PythonQt extensions." OFF)
 
 if(PythonQt_Extensions)
-  if(NOT PythonQt_Wrap_QtAll)
-    MESSAGE(FATAL_ERROR "Cannot build PythonQt_QtAll without PythonQt_Wrap_QtAll set to ON")
-  endif(NOT PythonQt_Wrap_QtAll)
   set(qtall_headers
     PythonQt_QtAll/PythonQt_QtAll.h)
 
   set(qtall_sources
     PythonQt_QtAll/PythonQt_QtAll.cpp)
+
+  foreach(qtlib ${qtlibs})
+    set(qt_wrapped_lib ${qtlib_to_wraplib_${qtlib}})
+    if(${PythonQt_Wrap_Qt${qt_wrapped_lib}})
+      add_definitions("-D${PythonQt_Wrap_Qt${qt_wrapped_lib}}")
+    endif()
+  endforeach()
 
   include_directories(generated_cpp${generated_cpp_suffix})
 
