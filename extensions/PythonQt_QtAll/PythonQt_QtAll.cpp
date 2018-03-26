@@ -34,41 +34,88 @@
 
 #include "PythonQt.h"
 
+#ifdef PythonQt_Wrap_Qtgui
 void PythonQt_init_QtGui(PyObject*);
+#endif
+#ifdef PythonQt_Wrap_Qtsvg
 void PythonQt_init_QtSvg(PyObject*);
+#endif
+#ifdef PythonQt_Wrap_Qtsql
 void PythonQt_init_QtSql(PyObject*);
+#endif
+#ifdef PythonQt_Wrap_Qtnetwork
 void PythonQt_init_QtNetwork(PyObject*);
+#endif
+#ifdef PythonQt_Wrap_Qtcore
 void PythonQt_init_QtCore(PyObject*);
-void PythonQt_init_QtOpenGL(PyObject*);
-void PythonQt_init_QtXml(PyObject*);
-void PythonQt_init_QtXmlPatterns(PyObject*);
-void PythonQt_init_QtMultimedia(PyObject*);
-void PythonQt_init_QtQml(PyObject*);
-void PythonQt_init_QtQuick(PyObject*);
-void PythonQt_init_QtUiTools(PyObject*);
-
-#ifdef PYTHONQT_WITH_WEBKIT
+#endif
+#ifdef PythonQt_Wrap_Qtwebkit
 void PythonQt_init_QtWebKit(PyObject*);
+#endif
+#ifdef PythonQt_Wrap_Qtopengl
+void PythonQt_init_QtOpenGL(PyObject*);
+#endif
+#ifdef PythonQt_Wrap_Qtxml
+void PythonQt_init_QtXml(PyObject*);
+#endif
+#ifdef PythonQt_Wrap_Qtxmlpatterns
+void PythonQt_init_QtXmlPatterns(PyObject*);
+#endif
+#ifdef PythonQt_Wrap_Qtmultimedia
+void PythonQt_init_QtMultimedia(PyObject*);
+#endif
+#ifdef PythonQt_Wrap_Qtqml
+void PythonQt_init_QtQml(PyObject*);
+#endif
+#ifdef PythonQt_Wrap_Qtquick
+void PythonQt_init_QtQuick(PyObject*);
+#endif
+#ifdef PythonQt_Wrap_Qtuitools
+void PythonQt_init_QtUiTools(PyObject*);
 #endif
 
 namespace PythonQt_QtAll
 {
   PYTHONQT_QTALL_EXPORT void init() {
+#ifdef PythonQt_Wrap_Qtcore
     PythonQt_init_QtCore(0);
+#endif
+#ifdef PythonQt_Wrap_Qtnetwork
     PythonQt_init_QtNetwork(0);
+#endif
+#ifdef PythonQt_Wrap_Qtgui
     PythonQt_init_QtGui(0);
+#endif
+#ifdef PythonQt_Wrap_Qtxml
     PythonQt_init_QtXml(0);
+#endif
+#ifdef PythonQt_Wrap_Qtsvg
     PythonQt_init_QtSvg(0);
+#endif
+#ifdef PythonQt_Wrap_Qtsql
     PythonQt_init_QtSql(0);
-#ifdef PYTHONQT_WITH_WEBKIT
+#endif
+#ifdef PythonQt_Wrap_Qtwebkit
     PythonQt_init_QtWebKit(0);
 #endif
+#ifdef PythonQt_Wrap_Qtopengl
     PythonQt_init_QtOpenGL(0);
+#endif
+#ifdef PythonQt_Wrap_Qtxmlpatterns
     PythonQt_init_QtXmlPatterns(0);
+#endif
+#ifdef PythonQt_Wrap_Qtmultimedia
     PythonQt_init_QtMultimedia(0);
+#endif
+#ifdef PythonQt_Wrap_Qtqml
     PythonQt_init_QtQml(0);
+#endif
+#ifdef PythonQt_Wrap_Qtquick
     PythonQt_init_QtQuick(0);
+#endif
+#ifdef PythonQt_Wrap_Qtuitools
     PythonQt_init_QtUiTools(0);
+#endif
   };
 };
 
