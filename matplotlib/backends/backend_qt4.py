@@ -49,14 +49,14 @@ def _create_qApp():
     Only one qApp can exist at a time, so check before creating one.
     """
     return
-    # Disabled since QApplication is already there
+    # Disabled for MeVisLab, since QApplication is already there
     if QtGui.QApplication.startingUp():
         if DEBUG: print "Starting up QApplication"
         global qApp
         app = QtGui.QApplication.instance()
         if app is None:
             qApp = QtGui.QApplication( [" "] )
-            qApp.connect( QtCore.SIGNAL( "lastWindowClosed()" ),
+            QtCore.QObject.connect( qApp, QtCore.SIGNAL( "lastWindowClosed()" ),
                                 qApp, QtCore.SLOT( "quit()" ) )
         else:
             qApp = app
@@ -98,13 +98,13 @@ class TimerQT(TimerBase):
         # Create a new timer and connect the timeout() signal to the
         # _on_timer method.
         self._timer = QtCore.QTimer()
-        self._timer.connect( QtCore.SIGNAL('timeout()'),
+        QtCore.QObject.connect(self._timer, QtCore.SIGNAL('timeout()'),
             self._on_timer)
 
     def __del__(self):
         # Probably not necessary in practice, but is good behavior to disconnect
         TimerBase.__del__(self)
-        self._timer.disconnect( QtCore.SIGNAL('timeout()'),
+        QtCore.QObject.disconnect(self._timer , QtCore.SIGNAL('timeout()'),
             self._on_timer)
 
     def _timer_set_single_shot(self):
@@ -142,7 +142,7 @@ class FigureCanvasQT( QtGui.QWidget, FigureCanvasBase ):
         w,h = self.get_width_height()
         self.resize( w, h )
 
-        self.connect(QtCore.SIGNAL('destroyed()'),
+        QtCore.QObject.connect(self, QtCore.SIGNAL('destroyed()'),
             self.close_event)
 
     def __timerEvent(self, event):
@@ -217,12 +217,10 @@ class FigureCanvasQT( QtGui.QWidget, FigureCanvasBase ):
         QtGui.QWidget.resizeEvent(self, event)
 
     def sizeHint( self ):
-        if DEBUG: print "FigureCanvasQt.sizeHint()"
         w, h = self.get_width_height()
         return QtCore.QSize( w, h )
 
     def minumumSizeHint( self ):
-        if DEBUG: print "FigureCanvasQt.minumumSizeHint()"
         return QtCore.QSize( 10, 10 )
 
     def _get_key( self, event ):
@@ -271,11 +269,7 @@ class FigureCanvasQT( QtGui.QWidget, FigureCanvasBase ):
         def idle_draw(*args):
             self.draw()
             self._idle = True
-        if d:
-            if QtCore.QTimer.singleShot:
-                QtCore.QTimer.singleShot(0, idle_draw)
-            else:
-                idle_draw()
+        if d: QtCore.QTimer.singleShot(0, idle_draw)
 
 class MainWindowQt(QtGui.QMainWindow):
   def __init__(self):
@@ -306,7 +300,7 @@ class FigureManagerQT( FigureManagerBase ):
         self.canvas.setFocusPolicy( QtCore.Qt.ClickFocus )
         self.canvas.setFocus()
 
-        self.window.connect( QtCore.SIGNAL( 'destroyed()' ),
+        QtCore.QObject.connect( self.window, QtCore.SIGNAL( 'destroyed()' ),
                             self._widgetclosed )
         self.window._destroying = False
 
@@ -377,7 +371,7 @@ class FigureManagerQT( FigureManagerBase ):
     def destroy( self, *args ):
         if self.window._destroying: return
         self.window._destroying = True
-        self.window.disconnect( QtCore.SIGNAL( 'destroyed()' ),
+        QtCore.QObject.disconnect( self.window, QtCore.SIGNAL( 'destroyed()' ),
                                    self._widgetclosed )
         if self.toolbar: self.toolbar.destroy()
         if DEBUG: print "destroy figure manager"
@@ -564,13 +558,17 @@ class SubplotToolQt( SubplotTool, QtGui.QWidget ):
         self.sliderhspace = QtGui.QSlider(QtCore.Qt.Vertical)
 
         # constraints
-        self.sliderleft  .connect( QtCore.SIGNAL( "valueChanged(int)" ),
+        QtCore.QObject.connect( self.sliderleft,
+                                QtCore.SIGNAL( "valueChanged(int)" ),
                                 self.sliderright.setMinimum )
-        self.sliderright .connect( QtCore.SIGNAL( "valueChanged(int)" ),
+        QtCore.QObject.connect( self.sliderright,
+                                QtCore.SIGNAL( "valueChanged(int)" ),
                                 self.sliderleft.setMaximum )
-        self.sliderbottom.connect( QtCore.SIGNAL( "valueChanged(int)" ),
+        QtCore.QObject.connect( self.sliderbottom,
+                                QtCore.SIGNAL( "valueChanged(int)" ),
                                 self.slidertop.setMinimum )
-        self.slidertop   .connect( QtCore.SIGNAL( "valueChanged(int)" ),
+        QtCore.QObject.connect( self.slidertop,
+                                QtCore.SIGNAL( "valueChanged(int)" ),
                                 self.sliderbottom.setMaximum )
 
         sliders = (self.sliderleft, self.sliderbottom, self.sliderright,
@@ -634,17 +632,23 @@ class SubplotToolQt( SubplotTool, QtGui.QWidget ):
         self.sliderhspace.setSliderPosition(\
                                     int(targetfig.subplotpars.hspace*1000))
 
-        self.sliderleft.connect( QtCore.SIGNAL( "valueChanged(int)" ),
+        QtCore.QObject.connect( self.sliderleft,
+                                QtCore.SIGNAL( "valueChanged(int)" ),
                                 self.funcleft )
-        self.sliderbottom.connect( QtCore.SIGNAL( "valueChanged(int)" ),
+        QtCore.QObject.connect( self.sliderbottom,
+                                QtCore.SIGNAL( "valueChanged(int)" ),
                                 self.funcbottom )
-        self.sliderright.connect( QtCore.SIGNAL( "valueChanged(int)" ),
+        QtCore.QObject.connect( self.sliderright,
+                                QtCore.SIGNAL( "valueChanged(int)" ),
                                 self.funcright )
-        self.slidertop.connect( QtCore.SIGNAL( "valueChanged(int)" ),
+        QtCore.QObject.connect( self.slidertop,
+                                QtCore.SIGNAL( "valueChanged(int)" ),
                                 self.functop )
-        self.sliderwspace.connect( QtCore.SIGNAL( "valueChanged(int)" ),
+        QtCore.QObject.connect( self.sliderwspace,
+                                QtCore.SIGNAL( "valueChanged(int)" ),
                                 self.funcwspace )
-        self.sliderhspace.connect( QtCore.SIGNAL( "valueChanged(int)" ),
+        QtCore.QObject.connect( self.sliderhspace,
+                                QtCore.SIGNAL( "valueChanged(int)" ),
                                 self.funchspace )
 
     def funcleft(self, val):
