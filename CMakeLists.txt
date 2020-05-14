@@ -55,6 +55,7 @@ endif()
 #-----------------------------------------------------------------------------
 # Python libraries
 
+find_package(PythonInterp)
 find_package(PythonLibs REQUIRED)
 include_directories(system "${PYTHON_INCLUDE_DIR}")
 add_definitions(
